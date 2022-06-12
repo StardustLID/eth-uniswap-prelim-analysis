@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from time import perf_counter
+from typing import Any
 import numpy as np
 import pwlf
 
@@ -11,6 +12,7 @@ class PwlfResult:
     yHat: np.ndarray
     p_values: np.ndarray
     se: np.ndarray
+    predict: Any
 
 def regression(x: np.ndarray, y: np.ndarray, n_segments: int, step_size: float = 0.0001) -> PwlfResult:
     # fit your data (x and y)
@@ -31,7 +33,7 @@ def regression(x: np.ndarray, y: np.ndarray, n_segments: int, step_size: float =
     p = myPWLF.p_values(method='non-linear', step_size=step_size) # p-values
     se = myPWLF.se  # standard errors
 
-    return PwlfResult(z, slopes, xHat, yHat, p, se)
+    return PwlfResult(z, slopes, xHat, yHat, p, se, myPWLF.predict)
 
 def main(x: np.ndarray, y: np.ndarray, n_segments: int, step_size: float = 0.0001) -> int:
     start = perf_counter()
