@@ -1,0 +1,164 @@
+{
+    "topPoolDatas": [
+        {
+            "tick": "46048",
+            "token0": {
+                "symbol": "UMIIE",
+                "id": "0x12b32f10a499bf40db334efe04226cca00bf2d9b",
+                "decimals": "18"
+            },
+            "token1": {
+                "symbol": "UMIIE2",
+                "id": "0x5ed60a121159481675bad3e648ba4c89753e056f",
+                "decimals": "18"
+            },
+            "feeTier": "500",
+            "sqrtPrice": "792049440195001924670217089101",
+            "liquidity": "1706245281880037395956227425"
+        },
+        {
+            "tick": "-276324",
+            "token0": {
+                "symbol": "DAI",
+                "id": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "decimals": "18"
+            },
+            "token1": {
+                "symbol": "USDC",
+                "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "decimals": "6"
+            },
+            "feeTier": "100",
+            "sqrtPrice": "79229026462582839763600",
+            "liquidity": "3312323621734939822420234"
+        },
+        {
+            "tick": "-276324",
+            "token0": {
+                "symbol": "DAI",
+                "id": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "decimals": "18"
+            },
+            "token1": {
+                "symbol": "USDC",
+                "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "decimals": "6"
+            },
+            "feeTier": "500",
+            "sqrtPrice": "79229417539107250382280",
+            "liquidity": "394286487035930610771435"
+        },
+        {
+            "tick": "203313",
+            "token0": {
+                "symbol": "USDC",
+                "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "decimals": "6"
+            },
+            "token1": {
+                "symbol": "WETH",
+                "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                "decimals": "18"
+            },
+            "feeTier": "3000",
+            "sqrtPrice": "2058484474004220286180095441299685",
+            "liquidity": "5870494598146803976"
+        },
+        {
+            "tick": "203328",
+            "token0": {
+                "symbol": "USDC",
+                "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "decimals": "6"
+            },
+            "token1": {
+                "symbol": "WETH",
+                "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                "decimals": "18"
+            },
+            "feeTier": "500",
+            "sqrtPrice": "2060104979292279209990222996181970",
+            "liquidity": "10511597173940822220"
+        },
+        {
+            "tick": "-276331",
+            "token0": {
+                "symbol": "FRAX",
+                "id": "0x853d955acef822db058eb8505911ed77f175b99e",
+                "decimals": "18"
+            },
+            "token1": {
+                "symbol": "USDC",
+                "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "decimals": "6"
+            },
+            "feeTier": "500",
+            "sqrtPrice": "79204306759731374545668",
+            "liquidity": "30322053812954763638949"
+        },
+        {
+            "tick": "259481",
+            "token0": {
+                "symbol": "WBTC",
+                "id": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+                "decimals": "8"
+            },
+            "token1": {
+                "symbol": "WETH",
+                "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                "decimals": "18"
+            },
+            "feeTier": "3000",
+            "sqrtPrice": "34133183911138850357091026930751830",
+            "liquidity": "381997925649344173"
+        },
+        {
+            "tick": "13",
+            "token0": {
+                "symbol": "USDC",
+                "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "decimals": "6"
+            },
+            "token1": {
+                "symbol": "USDT",
+                "id": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "decimals": "6"
+            },
+            "feeTier": "100",
+            "sqrtPrice": "79280593169497663840292410100",
+            "liquidity": "150328030622453390"
+        },
+        {
+            "tick": "56142",
+            "token0": {
+                "symbol": "WBTC",
+                "id": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+                "decimals": "8"
+            },
+            "token1": {
+                "symbol": "USDC",
+                "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "decimals": "6"
+            },
+            "feeTier": "3000",
+            "sqrtPrice": "1311997858532173265651901205113",
+            "liquidity": "16172611421941"
+        },
+        {
+            "tick": "-203300",
+            "token0": {
+                "symbol": "WETH",
+                "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                "decimals": "18"
+            },
+            "token1": {
+                "symbol": "USDT",
+                "id": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "decimals": "6"
+            },
+            "feeTier": "3000",
+            "sqrtPrice": "3051514632824287577835984",
+            "liquidity": "2439759831764227663"
+        }
+    ]
+}
