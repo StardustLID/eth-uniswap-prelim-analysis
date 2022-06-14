@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# for now, gitignore all data
+# TODO: use DVC (data version control) if needed in the future
+data/
