@@ -1,6 +1,11 @@
 # eth-uniswap-prelim-analysis
 Preliminary data analysis on Uniswap V3 on Ethereum.
 
+<!-- buttons -->
+[![python](https://img.shields.io/badge/python-v3-brightgreen.svg)](https://www.python.org/)
+[![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 ## Project structure
 ```bash
 .
