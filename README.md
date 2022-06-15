@@ -5,6 +5,7 @@ Preliminary data analysis on Uniswap V3 on Ethereum.
 [![python](https://img.shields.io/badge/python-v3-brightgreen.svg)](https://www.python.org/)
 [![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 
 ## Project structure
 ```bash
