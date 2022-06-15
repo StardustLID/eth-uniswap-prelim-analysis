@@ -29,6 +29,7 @@ Preliminary data analysis on Uniswap V3 on Ethereum.
 ```bash
 poetry install
 ```
+Note: The remaining commands assume you are in a poetry shell. If you aren't, follow the instructions in the section [Activating the virtual environment](#activating-the-virtual-environment).
 
 After setting up `poetry`, install the `pre-commit` hook:
 ```bash
