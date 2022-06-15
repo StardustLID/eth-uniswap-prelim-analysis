@@ -30,6 +30,16 @@ Preliminary data analysis on Uniswap V3 on Ethereum.
 poetry install
 ```
 
+After setting up `poetry`, install the `pre-commit` hook:
+```bash
+pre-commit install
+```
+
+You can optionally run the pre-commit hook manually:
+```bash
+pre-commit run --all-files
+```
+
 ## Activating the virtual environment
 ```bash
 poetry shell
