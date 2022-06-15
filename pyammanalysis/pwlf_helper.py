@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from time import perf_counter
 from typing import Any
 import numpy as np
 import pwlf
@@ -34,21 +33,3 @@ def regression(x: np.ndarray, y: np.ndarray, n_segments: int, step_size: float =
     se = myPWLF.se  # standard errors
 
     return PwlfResult(z, slopes, xHat, yHat, p, se, myPWLF.predict)
-
-def main(x: np.ndarray, y: np.ndarray, n_segments: int, step_size: float = 0.0001) -> int:
-    start = perf_counter()
-
-    # regression
-    PwlfResult = regression(x, y, n_segments, step_size)
-    print(PwlfResult.tp)
-    print(PwlfResult.slopes)
-    print(PwlfResult.p_values)
-    print(PwlfResult.se)
-
-    end = perf_counter()
-    print('time elapsed: ' + str(end-start) + ' s')
-
-    return 0
-
-if __name__ == '__main__':
-    main()
