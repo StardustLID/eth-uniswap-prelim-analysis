@@ -1,3 +1,5 @@
+DATA_PATH: data
+SUBPLOTS_PER_ROW: 3
 UNISWAP_V3_SUBGRAPH_URL: https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3
 tokens:
   coins:
