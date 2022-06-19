@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import numpy as np
 import pandas as pd
 
@@ -49,6 +51,7 @@ def top_uniswapv3_tokens():
         tokens(first: 1000, orderBy: totalValueLockedUSD, orderDirection: desc) {
             id
             symbol
+            name
             totalValueLockedUSD
         }
     }
@@ -76,10 +79,12 @@ def get_connected_tokens():
 
 
 def create_adj_matrix(outfile="adjacency_matrix.csv"):
-    # fetch list of top token symbols
-    top_100_tokens_dicts = top_uniswapv3_tokens()["tokens"][:100]
-    addr2sym_dict = {token["id"]: token["symbol"] for token in top_100_tokens_dicts}
-    top_100_tokens = list(map(lambda x: x["id"], top_100_tokens_dicts))
+    # fetch list of top token names
+    top_tokens_dicts = top_uniswapv3_tokens()["tokens"]
+    addr2name_dict = defaultdict(
+        lambda: "oof", {x["id"]: x["name"] for x in top_tokens_dicts}
+    )
+    top_100_tokens = list(map(lambda x: x["id"], top_tokens_dicts[:100]))
 
     # create empty df
     df = pd.DataFrame(columns=top_100_tokens, index=top_100_tokens, dtype=np.float64)
@@ -94,8 +99,10 @@ def create_adj_matrix(outfile="adjacency_matrix.csv"):
             df[token0][token1] = pool["token1Price"]
             df[token1][token0] = pool["token0Price"]
 
-    # map addr to symbol in the final step
-    df = df.rename(index=addr2sym_dict).rename(columns=addr2sym_dict)
+    # map addr to name in the final step
+    # DON'T use symbol - there are different wrappers for the same coin
+    # E.g. USDC, wormhole wrapped USDC, wormhole (POS) USDC...
+    df = df.rename(index=addr2name_dict).rename(columns=addr2name_dict)
 
     df.to_csv(outfile)
     return df
