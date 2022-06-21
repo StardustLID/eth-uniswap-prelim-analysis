@@ -11,15 +11,28 @@ Preliminary data analysis on Uniswap V3 on Ethereum.
 ```bash
 .
 ├── analysis
-│   ├── data                        # data generated during notebook run (gitignored)
-│   └── chart_data.ipynb            # analysis of Uniswap V3 info page chart data
+│   ├── data                        # data (gitignored, content omitted)
+│   ├── 1-DataCollection.ipynb      # fetch data from subgraph and parse as DataFrames
+│   ├── 2-TokenVolumeAnalysis.ipynb # analysis of token trading volume
+│   ├── 3-PoolVolumeAnalysis.ipynb  # analysis of pool trading volume
+│   └── 4-PoolTvlAnalysis.ipynb     # analysis of pool TVL
 ├── cookbook                        # useful code snippets written in notebooks
+│   ├── data                        # data (gitignored, content omitted)
+│   ├── subgraph_examples.ipynb     # implementation of Uniswap V3 subgraph tutorial
+│   └── vertex_degrees.ipynb        # analysis of connectedness of Uniswap V3 tokens
 ├── pyammanalysis                   # local python module
-│   ├── __init__.py                 # make pyammanalysis a Python module
-│   ├── config.py                   # configurations like external API URL
+│   ├── amm_arb                     # sub-module for AMM arbitrage
+│   │   ├── __init__.py
+│   │   ├── graph_arbitrage.py      # variant of Bellman-Ford algorithm to find arbitrage
+│   │   └── uniswapv3_scraper.py    # scrape token pairs and produce adjacency list
+│   ├── __init__.py
 │   ├── graphql_helper.py           # wrapper around HTTP request.post to the subgraph URL
-│   └── pwlf_helper.py              # wrapper around pwlf (Piecewise Linear Fit) package
+│   ├── pwlf_helper.py              # wrapper around pwlf (Piecewise Linear Fit) package
+│   └── util.py                     # configurations like external API URL
+├── .flake8                         # `flake8` Python style enforcement config file
 ├── .gitignore                      # ignore files that cannot be committed to Git
+├── .pre-commit-config.yaml         # `pre-commit` hook config file
+├── config.yaml                     # configs like whitelisted tokens
 ├── LICENSE.txt                     # MIT license file
 ├── poetry.lock                     # lock versions of dependencies managed by poetry
 ├── pyproject.toml                  # build system dependencies
