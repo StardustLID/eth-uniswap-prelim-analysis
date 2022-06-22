@@ -1,0 +1,34 @@
+// group 1: unidentified tx
+Swap 0.047256744476558381 Ether         For 1,634.628127334048929935 STND       On Uniswap V2
+
+// group 2: <ETH / MTO>, Uniswap V2 & V3 => earns ETH
+Swap 0.030101763356738056 Ether         For 1,197.870683638451780146 MTO        On Uniswap V2
+Swap 1,197.869482259909079957 MTO       For 0.033130533788874408 Ether          On Uniswap V3
+
+// group 3: <ETH / ALN>, Uniswap V2 & Sushiswap => earns ETH
+Swap 0.051663145404974864 Ether         For 13,971.390985990002399214 ALN       On Uniswap V2
+Swap 13,971.390985990002399214 ALN      For 0.054567669622326492 Ether          On Sushiswap
+
+// group 4: ETH -> LMT -> LYM -> ETH, Uniswap V2 & Sushiswap => earns ETH
+Swap 0.03562176995804067 Ether          For 24,384.568567533755797683 LMT       On Sushiswap
+Swap 24,384.568567533755797683 LMT      For 20,796.121103404846522452 LYM       On Uniswap V2
+Swap 20,796.121103404846522452 LYM      For 0.03973201593881181 Ether           On Sushiswap
+
+// group 5: ETH -> LBT -> 5GS -> ETH, Uniswap V2 => earns ETH
+Swap 0.078344525103934434 Ether         For 1,754.673155155967912284A LBT       On Uniswap V2
+Swap 1,754.673155155967912284A LBT      For 6,645.69453576553728198 5GS         On Uniswap V2
+Swap 6,645.69453576553728198 5GS        For 0.082361461143867988 Ether          On Uniswap V2
+
+// group 6: <ETH / RSR>, Uniswap V2 & V3 => earns ETH
+Swap 0.017833353934585101 Ether         For 3,707.421257296146472862 RSR        On Uniswap V2
+Swap 3,707.416921825857864745 RSR       For 0.020877352220107463 Ether          On Uniswap V3
+
+// group 7: erowan -> ETH -> LSS -> USDT -> erowan => earns ETH (and negligible USDT)
+Swap 15,810.652622284181156816 erowan   For 0.093420013787829637 Ether          On Sushiswap
+Swap 0.087109307299713778 Ether         For 954.10490882867114783 LSS           On Uniswap V2
+Swap 954.10490882867114783 LSS          For 164.775205 USDT                     On Uniswap V2
+Swap 164.775039 USDT                    For 15,810.652622284181156816 erowan    On Uniswap V3
+
+// group 8: <ETH / JRT>, Balancer & Uniswap V2 => earns ETH
+Swap 0.04981338480502972 Ether          For 4,714.776452130063454811 JRT        On Balancer
+Swap 4,714.771737353611324746 JRT       For 0.054462066392269672 Ether          On Uniswap V2
