@@ -26,7 +26,7 @@ Preliminary data analysis on Uniswap V3 on Ethereum.
 │   │   ├── graph_arbitrage.py      # variant of Bellman-Ford algorithm to find arbitrage
 │   │   └── uniswapv3_scraper.py    # scrape token pairs and produce adjacency list
 │   ├── __init__.py
-│   ├── graphql_helper.py           # wrapper around HTTP request.post to the subgraph URL
+│   ├── subgraph.py                 # subgraph helper functions
 │   ├── pwlf_helper.py              # wrapper around pwlf (Piecewise Linear Fit) package
 │   └── util.py                     # configurations like external API URL
 ├── .flake8                         # `flake8` Python style enforcement config file

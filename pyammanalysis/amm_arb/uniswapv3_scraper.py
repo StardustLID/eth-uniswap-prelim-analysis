@@ -3,12 +3,7 @@ from collections import defaultdict
 import numpy as np
 import pandas as pd
 
-from pyammanalysis.graphql_helper import run_query
-
-# from tqdm import tqdm
-
-
-UNISWAP_V3_SUBGRAPH_URL = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3"
+from pyammanalysis.subgraph import UNISWAP_V3_SUBGRAPH_URL, run_query
 
 
 def top_uniswapv3_pairs():

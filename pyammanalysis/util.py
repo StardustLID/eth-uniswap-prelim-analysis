@@ -28,12 +28,6 @@ Starting timestamp for day-based token and pool time series.
 Represents GMT: Friday, April 23, 2021 9:42:55 AM.
 """
 
-UNISWAP_V3_SUBGRAPH_URL = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3"
-"""
-Subgraph URL of Uniswap V3. Can be queried with GraphQL queries via HTTP POST method.
-In Python, this can be achieved by `requests` HTTP library, or the `gql` GraphQL library.
-"""
-
 
 def read_yaml(file_path):
     with open(file_path, "r") as f:
