@@ -5,5 +5,8 @@ This module adapts it such that prices are read from Uniswap V3 subgraph directl
 Other DEX may be added in the future.
 """
 
+from .uniswapv3_scraper import UniV3Scraper
 
-__all__ = []
+__all__ = [
+    "UniV3Scraper",
+]
