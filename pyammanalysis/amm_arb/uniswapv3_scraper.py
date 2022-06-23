@@ -48,6 +48,61 @@ class UniV3Scraper(base_scraper.BaseScraper):
         super().__init__(block_number)
         self.url = UNISWAP_V3_SUBGRAPH_URL
 
+    @staticmethod
+    def flatten_pools_for_tokens(pools_list: list, key: str = "symbol") -> list:
+        tokens = []
+        for pair_dict in pools_list:
+            for token in ["token0", "token1"]:
+                tokens.append(pair_dict[token][key])
+        return tokens
+
+    def tx_query(self, token_key: str = "symbol"):
+        """
+        Returns tx, list of pools and tokens involved given a tx hash.
+        """
+        tx_query = """
+        {
+            transaction(id: "0xe976f2ebd70135153e8522c3aaa3c9d489717ef621d69b9e00a9f215d0474918") {
+                blockNumber
+                timestamp
+                swaps {
+                    pool {
+                        id
+                        token0 {
+                            id
+                            symbol
+                        }
+                        token1 {
+                            id
+                            symbol
+                        }
+                        token0Price
+                        token1Price
+                    }
+                    amount0
+                    amount1
+                }
+            }
+        }
+        """
+        transaction = self.scrape(tx_query)["transaction"]
+        pools = [x["pool"] for x in transaction["swaps"]]
+        tokenIds = (list(set(UniV3Scraper.flatten_pools_for_tokens(pools, "id"))),)
+        tokenSymbols = list(set(UniV3Scraper.flatten_pools_for_tokens(pools, "symbol")))
+
+        # flatten dict
+        for pool_dict in pools:
+            for token in ["token0", "token1"]:
+                pool_dict[token] = pool_dict[token][token_key]
+
+        return {
+            "transaction": transaction,
+            "pools": pools,
+            "poolIds": [x["id"] for x in pools],
+            "tokenIds": tokenIds,
+            "tokenSymbols": tokenSymbols,
+        }
+
     def top_pairs(self):
         """
         Returns the top 1000 pairs by TVL from Uniswap V3 subgraph.

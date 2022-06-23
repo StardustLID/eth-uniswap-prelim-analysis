@@ -33,7 +33,10 @@ def run_query(url: str, query):
     # endpoint where you are making the request
     request = requests.post(url, "", json={"query": query})
     if request.status_code == 200:
-        return request.json()["data"]
+        try:
+            return request.json()["data"]
+        except Exception:
+            raise Exception(request.json())
     else:
         raise Exception(
             f"Query failed. Return code is {request.status_code}.      {query}"
