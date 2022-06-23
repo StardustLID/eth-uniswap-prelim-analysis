@@ -55,7 +55,7 @@ class UniV3Scraper(base_scraper.BaseScraper):
         afterwards the result is stored in `self._top_pairs`.
         """
         if self._top_pairs is None:
-            pairs_list = self.scrape(UniV3Scraper.top_pools_query)["data"]
+            pairs_list = self.scrape(UniV3Scraper.top_pools_query)
 
             # flatten dict
             for pool_dict in pairs_list["pools"]:
@@ -71,7 +71,7 @@ class UniV3Scraper(base_scraper.BaseScraper):
         Returns the top 1000 tokens by TVL from Uniswap V3 subgraph.
         """
         if self._top_tokens is None:
-            tokens_list = self.scrape(UniV3Scraper.top_tokens_query)["data"]
+            tokens_list = self.scrape(UniV3Scraper.top_tokens_query)
             self._top_tokens = tokens_list
 
         return self._top_tokens

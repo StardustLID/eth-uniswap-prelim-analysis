@@ -86,7 +86,7 @@ class UniV2Scraper(base_scraper.BaseScraper):
             }
         }
         """
-        transaction = self.scrape(tx_query)["data"]["transaction"]
+        transaction = self.scrape(tx_query)["transaction"]
         pairs = [x["pair"] for x in transaction["swaps"]]
         tokenIds = (list(set(UniV2Scraper.flatten_pairs_for_tokens(pairs, "id"))),)
         tokenSymbols = list(set(UniV2Scraper.flatten_pairs_for_tokens(pairs, "symbol")))
@@ -111,7 +111,7 @@ class UniV2Scraper(base_scraper.BaseScraper):
         afterwards the result is stored in `self._top_pairs`.
         """
         if self._top_pairs is None:
-            pairs_list = self.scrape(UniV2Scraper.top_pairs_query)["data"]
+            pairs_list = self.scrape(UniV2Scraper.top_pairs_query)
 
             # flatten dict
             for pool_dict in pairs_list["pairs"]:
@@ -127,7 +127,7 @@ class UniV2Scraper(base_scraper.BaseScraper):
         Returns the top 1000 tokens by TVL from Uniswap V2 subgraph.
         """
         if self._top_tokens is None:
-            tokens_list = self.scrape(UniV2Scraper.top_tokens_query)["data"]
+            tokens_list = self.scrape(UniV2Scraper.top_tokens_query)
             self._top_tokens = tokens_list
 
         return self._top_tokens
