@@ -3,71 +3,87 @@ from collections import defaultdict
 import numpy as np
 import pandas as pd
 
-from pyammanalysis.subgraph import UNISWAP_V3_SUBGRAPH_URL, run_query
+from pyammanalysis.subgraph import UNISWAP_V3_SUBGRAPH_URL
+
+from . import base_scraper
 
 
-class UniV3Scraper:
-    block_number: int
-    top_pairs: list
+class UniV3Scraper(base_scraper.BaseScraper):
+    top_pools_query = """
+    {
+        pools(first: 1000, orderBy: totalValueLockedUSD, orderDirection: desc) {
+            id,
+            token0 {
+                id
+            },
+            token1 {
+                id
+            },
+            feeTier,
+            liquidity,
+            token0Price,
+            token1Price
+        }
+    }
+    """
+    """
+    Queries the first 1000 `Pool` entities, ordered by decreasing `totalValueLockedUSD`.
+    """
+
+    top_tokens_query = """
+    {
+        tokens(first: 1000, orderBy: totalValueLockedUSD, orderDirection: desc) {
+            id
+            symbol
+            name
+            totalValueLockedUSD
+        }
+    }
+    """
+    """
+    Queries the first 1000 `Token` entities, ordered by decreasing `totalValueLockedUSD`.
+    """
 
     def __init__(self, block_number) -> None:
-        self.block_number = block_number
+        super().__init__(block_number)
+        self.url = UNISWAP_V3_SUBGRAPH_URL
 
-    def top_uniswapv3_pairs(self):
+    def top_pairs(self):
         """
         Returns the top 1000 pairs by TVL from Uniswap V3 subgraph.
+        The result is only fetched when this function is first called,
+        afterwards the result is stored in `self._top_pairs`.
         """
-        top_tvl_pools_query = """
-        {
-            pools(first: 1000, orderBy: totalValueLockedUSD, orderDirection: desc) {
-                id,
-                token0 {
-                    id
-                },
-                token1 {
-                    id
-                },
-                feeTier,
-                liquidity,
-                token0Price,
-                token1Price
-            }
-        }
-        """
-        pairs_list = run_query(UNISWAP_V3_SUBGRAPH_URL, top_tvl_pools_query)["data"]
+        if self._top_pairs is None:
+            pairs_list = self.scrape(UniV3Scraper.top_pools_query)["data"]
 
-        # flatten dict
-        for pool_dict in pairs_list["pools"]:
-            for token in ["token0", "token1"]:
-                pool_dict[token] = pool_dict[token]["id"]
+            # flatten dict
+            for pool_dict in pairs_list["pools"]:
+                for token in ["token0", "token1"]:
+                    pool_dict[token] = pool_dict[token]["id"]
 
-        return pairs_list
+            self._top_pairs = pairs_list
 
-    def top_uniswapv3_tokens(self):
+        return self._top_pairs
+
+    def top_tokens(self):
         """
         Returns the top 1000 tokens by TVL from Uniswap V3 subgraph.
         """
-        top_tvl_tokens_query = """
-        {
-            tokens(first: 1000, orderBy: totalValueLockedUSD, orderDirection: desc) {
-                id
-                symbol
-                name
-                totalValueLockedUSD
-            }
-        }
-        """
-        tokens_list = run_query(UNISWAP_V3_SUBGRAPH_URL, top_tvl_tokens_query)["data"]
-        return tokens_list
+        if self._top_tokens is None:
+            tokens_list = self.scrape(UniV3Scraper.top_tokens_query)["data"]
+            self._top_tokens = tokens_list
 
-    def get_connected_tokens(self):
+        return self._top_tokens
+
+    def get_connected_tokens(self, min_degree: int = 3):
         """
         Loads the pairs from Uniswap V3 that have 3 or more connections
 
         :return: 'connected' pairs, e.g {USDT:[BTC,ETH], ETH:[ADA, OMG]}
         :rtype: {str : str list} dict
         """
-        pairs = self.top_uniswapv3_pairs()
+        pairs = self.top_pairs()
 
         flattened_tokens_in_pools = np.concatenate(
             [[x["token0"], x["token1"]] for x in pairs]
@@ -75,35 +91,38 @@ class UniV3Scraper:
         unique, counts = np.unique(flattened_tokens_in_pools, return_counts=True)
         token_count = dict(zip(unique, counts))
 
-        return {k: v for k, v in token_count.items() if len(v) >= 3}
+        return {k: v for k, v in token_count.items() if len(v) >= min_degree}
 
     def create_adj_matrix(self, outfile="adjacency_matrix.csv"):
-        # fetch list of top token names
-        top_tokens_dicts = self.top_uniswapv3_tokens()["tokens"]
-        addr2name_dict = defaultdict(
-            lambda: "oof", {x["id"]: x["name"] for x in top_tokens_dicts}
-        )
-        top_100_tokens = list(map(lambda x: x["id"], top_tokens_dicts[:100]))
+        if self._adj_matrix is None:
+            # fetch list of top token names
+            top_tokens_dicts = self.top_tokens()["tokens"]
+            addr2name_dict = defaultdict(
+                lambda: "oof", {x["id"]: x["name"] for x in top_tokens_dicts}
+            )
+            top_100_tokens = list(map(lambda x: x["id"], top_tokens_dicts[:100]))
 
-        # create empty df
-        df = pd.DataFrame(
-            columns=top_100_tokens, index=top_100_tokens, dtype=np.float64
-        )
+            # create empty df
+            df = pd.DataFrame(
+                columns=top_100_tokens, index=top_100_tokens, dtype=np.float64
+            )
 
-        # TODO: consider multi-paths for the same pairs
-        # fill in the adjacency matrix
-        for pool in self.top_uniswapv3_pairs()["pools"]:
-            token0 = pool["token0"]
-            token1 = pool["token1"]
-            if token0 in top_100_tokens and token1 in top_100_tokens:
-                # indexing allows chaining: df[a][b] * df[b][c] = df[a][c]
-                df[token0][token1] = pool["token1Price"]
-                df[token1][token0] = pool["token0Price"]
+            # TODO: consider multi-paths for the same pairs
+            # fill in the adjacency matrix
+            for pool in self.top_pairs()["pools"]:
+                token0 = pool["token0"]
+                token1 = pool["token1"]
+                if token0 in top_100_tokens and token1 in top_100_tokens:
+                    # indexing allows chaining: df[a][b] * df[b][c] = df[a][c]
+                    df[token0][token1] = pool["token1Price"]
+                    df[token1][token0] = pool["token0Price"]
 
-        # map addr to name in the final step
-        # DON'T use symbol - there are different wrappers for the same coin
-        # E.g. USDC, wormhole wrapped USDC, wormhole (POS) USDC...
-        df = df.rename(index=addr2name_dict).rename(columns=addr2name_dict)
+            # map addr to name in the final step
+            # DON'T use symbol - there are different wrappers for the same coin
+            # E.g. USDC, wormhole wrapped USDC, wormhole (POS) USDC...
+            df = df.rename(index=addr2name_dict).rename(columns=addr2name_dict)
 
-        df.to_csv(outfile)
-        return df
+            df.to_csv(outfile)
+            self._adj_matrix = df
+
+        return self._adj_matrix
