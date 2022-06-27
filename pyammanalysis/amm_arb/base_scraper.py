@@ -23,3 +23,6 @@ class BaseScraper:
 
     def scrape(self, query: str):
         return run_query(self.url, query)
+
+    def scrape_batch(self, batched_query: str):
+        return self.scrape("query {" + batched_query + "}")
